@@ -65,6 +65,26 @@ describe('hocon test suite', function() {
       expect(hoconParser().parse(conf)).to.be.ok();
     });
 
+    it('should be parsed when comments (with forward slashes) are present', function() {
+      var conf = '//stupid comment\n"a" { }';
+      expect(hoconParser().parse(conf)).to.be.ok();
+    });
+
+    it('should be parsed when forward slashes are present in quoted strings', function() {
+      var conf = '{ "a" = "//stupid string" }';
+      expect(hoconParser().parse(conf)).to.be.ok();
+    });
+
+    it('should be parsed when comments (with number sign) are present', function() {
+      var conf = '#stupid comment\n"a" { }';
+      expect(hoconParser().parse(conf)).to.be.ok();
+    });
+
+    it('should be parsed when number sign are present in quoted strings', function() {
+      var conf = '{ "a" = "#stupid string" }';
+      expect(hoconParser().parse(conf)).to.be.ok();
+    });
+
     it('should be parsed when root braces are omitted', function() {
       var conf = '"a" { }';
       expect(hoconParser().parse(conf)).to.be.ok();

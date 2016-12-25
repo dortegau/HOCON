@@ -9,8 +9,8 @@ JS Port of HOCON (Human-Optimized Config Object Notation)
 * Root braces could be omitted
 * Supports trailing commas in arrays
 * Supports trailing commas in objects
+* Comments
 
 # Unsupported Features (yet! :)!)
 
-* Comments
 * Need not have a comma between values in arrays or objects
