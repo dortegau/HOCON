@@ -69,5 +69,35 @@ describe('hocon test suite', function() {
       var conf = '"a" { }';
       expect(hoconParser().parse(conf)).to.be.ok();
     });
+
+    it('should be parsed when exists trailing comma in arrays', function() {
+      var conf = '{ "foo" : [ "bar" , "baz" , ] }';
+      expect(hoconParser().parse(conf)).to.be.ok();
+    });
+
+    //it('shouldn\'t be parsed when exists two trailing commas in arrays', function() {
+    //  var conf = '{ "foo" : [ "bar" , "baz" , , ] }';
+    //  expect(hoconParser().parse(conf)).to.throwException();
+    //});
+
+    //it('shouldn\'t be parsed when exists initial comma in arrays', function() {
+    //  var conf = '{ "foo" : [ , "bar" , "baz" ] }';
+    //  expect(hoconParser().parse(conf)).to.throwException();
+    //});
+
+    it('should be parsed when exists trailing comma in objects', function() {
+      var jsonSubset = '{ "foo" : { "bar" : "baz" , } }';
+      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    });
+
+    //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
+    //  var jsonSubset = '{ "foo" : { "bar" : "baz" , , } }';
+    //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    //});
+
+    //it('shouldn\'t be parsed when exists initial comma in objects', function() {
+    //  var jsonSubset = '{ "foo" : { , "bar" : "baz" } }';
+    //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    //});
   });
 });
