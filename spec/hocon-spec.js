@@ -1,7 +1,7 @@
 var hoconParser = require('../lib/hocon');
 var expect = require('expect.js');
 
-describe('hocon test suite', function() {
+describe('HOCON test suite', function() {
   describe('JSON subset features', function() {
     it('should be parsed using null value', function() {
       var jsonSubset = '{ "foo" : null }';
@@ -134,5 +134,13 @@ describe('hocon test suite', function() {
     //  var jsonSubset = '{ "foo" : { , "bar" : "baz" } }';
     //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
     //});
+
+    describe('duplicate keys and object merging', function(){
+      it('should be parsed when exists duplicate keys', function() {
+        var jsonSubset = '{ "foo" : { "a" : "42" }, "foo" : { "b" : "43" } }';
+        expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      });
+    });
+
   });
 });
