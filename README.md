@@ -8,6 +8,7 @@ JS Port of HOCON (Human-Optimized Config Object Notation)
 * Separator could be omitted if a key is followed by an open curly bracket ({)
 * Root braces could be omitted
 * Supports trailing commas in arrays
+* Supports break lines instead commas in arrays
 * Supports trailing commas in objects
 * Comments
 

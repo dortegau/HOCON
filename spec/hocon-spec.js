@@ -95,8 +95,18 @@ describe('hocon test suite', function() {
       expect(hoconParser().parse(conf)).to.be.ok();
     });
 
+    it('should be parsed when exists break lines instead of commas in arrays', function() {
+      var conf = '{ "foo" : [ "bar" \n "baz" ] }';
+      expect(hoconParser().parse(conf)).to.be.ok();
+    });
+
     //it('shouldn\'t be parsed when exists two trailing commas in arrays', function() {
     //  var conf = '{ "foo" : [ "bar" , "baz" , , ] }';
+    //  expect(hoconParser().parse(conf)).to.throwException();
+    //});
+
+    //it('shouldn\'t be parsed when exists two commas in a row', function() {
+    //  var conf = '{ "foo" : [ "bar" , , "baz" ] }';
     //  expect(hoconParser().parse(conf)).to.throwException();
     //});
 
@@ -112,6 +122,11 @@ describe('hocon test suite', function() {
 
     //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
     //  var jsonSubset = '{ "foo" : { "bar" : "baz" , , } }';
+    //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    //});
+
+    //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
+    //  var jsonSubset = '{ "foo" : { "bar" : "baz" , , "qux" : "quuz" } }';
     //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
     //});
 
