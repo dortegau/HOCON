@@ -5,140 +5,182 @@ describe('HOCON test suite', function() {
   describe('JSON subset features', function() {
     it('should be parsed using null value', function() {
       var jsonSubset = '{ "foo" : null }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : null });
     });
 
     it('should be parsed using empty string value', function() {
       var jsonSubset = '{ "foo" : "" }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : "" });
     });
 
     it('should be parsed using non-empty string value', function() {
       var jsonSubset = '{ "foo" : "bar" }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : "bar" });
     });
 
     it('should be parsed using positive number value', function() {
       var jsonSubset = '{ "foo" : 12 }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : 12 });
     });
 
     it('should be parsed using negative number value', function() {
       var jsonSubset = '{ "foo" : -12 }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : -12 });
     });
 
     it('should be parsed using true boolean value', function() {
       var jsonSubset = '{ "foo" : true }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : true });
     });
 
     it('should be parsed using false boolean value', function() {
       var jsonSubset = '{ "foo" : false }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : false });
     });
 
     it('should be parsed using empty object value', function() {
       var jsonSubset = '{ "foo" : {  } }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : { } });
     });
 
     it('should be parsed using filled object value', function() {
       var jsonSubset = '{ "foo" : { "bar" : "baz" } }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : { bar : "baz" } });
     });
 
     it('should be parsed using array of strings', function() {
       var jsonSubset = '{ "foo" : [ "bar" , "baz" ] }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var config = hoconParser.parse(jsonSubset);
+
+      expect(config).to.eql({ foo : [ "bar" , "baz" ] });
     });
   });
 
   describe('HOCON specific features', function(){
     it('should be parsed using = instead of : as pair separator', function() {
-      var conf = '{ "a" = "b" }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '{ "a" = "b" }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : "b"});
     });
 
     it('should be parsed without separator if a key is followed by {', function() {
-      var conf = '{ "a" { } }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '{ "a" { } }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : { } });
     });
 
     it('should be parsed when comments (with forward slashes) are present', function() {
-      var conf = '//stupid comment\n"a" { }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '//stupid comment\n"a" { }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : { } });
     });
 
     it('should be parsed when forward slashes are present in quoted strings', function() {
-      var conf = '{ "a" = "//stupid string" }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '{ "a" = "//stupid string" }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : "//stupid string" });
     });
 
     it('should be parsed when comments (with number sign) are present', function() {
-      var conf = '#stupid comment\n"a" { }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '#stupid comment\n"a" { }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : { } });
     });
 
     it('should be parsed when number sign are present in quoted strings', function() {
-      var conf = '{ "a" = "#stupid string" }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '{ "a" = "#stupid string" }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : "#stupid string" });
     });
 
     it('should be parsed when root braces are omitted', function() {
-      var conf = '"a" { }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '"a" { }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ a : { } });
     });
 
     it('should be parsed when exists trailing comma in arrays', function() {
-      var conf = '{ "foo" : [ "bar" , "baz" , ] }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '{ "foo" : [ "bar" , "baz" , ] }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ foo : [ "bar" , "baz" ] });
     });
 
     it('should be parsed when exists break lines instead of commas in arrays', function() {
-      var conf = '{ "foo" : [ "bar" \n "baz" ] }';
-      expect(hoconParser().parse(conf)).to.be.ok();
+      var hoconString = '{ "foo" : [ "bar" \n "baz" ] }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ foo : [ "bar" , "baz" ] });
     });
 
     //it('shouldn\'t be parsed when exists two trailing commas in arrays', function() {
-    //  var conf = '{ "foo" : [ "bar" , "baz" , , ] }';
-    //  expect(hoconParser().parse(conf)).to.throwException();
+    //  var hoconString = '{ "foo" : [ "bar" , "baz" , , ] }';
+    //  expect(hoconParser.parse(conf)).to.throwException();
     //});
 
     //it('shouldn\'t be parsed when exists two commas in a row', function() {
-    //  var conf = '{ "foo" : [ "bar" , , "baz" ] }';
-    //  expect(hoconParser().parse(conf)).to.throwException();
+    //  var hoconString = '{ "foo" : [ "bar" , , "baz" ] }';
+    //  expect(hoconParser.parse(conf)).to.throwException();
     //});
 
     //it('shouldn\'t be parsed when exists initial comma in arrays', function() {
-    //  var conf = '{ "foo" : [ , "bar" , "baz" ] }';
-    //  expect(hoconParser().parse(conf)).to.throwException();
+    //  var hoconString = '{ "foo" : [ , "bar" , "baz" ] }';
+    //  expect(hoconParser.parse(conf)).to.throwException();
     //});
 
     it('should be parsed when exists trailing comma in objects', function() {
-      var jsonSubset = '{ "foo" : { "bar" : "baz" , } }';
-      expect(hoconParser().parse(jsonSubset)).to.be.ok();
+      var hoconString = '{ "foo" : { "bar" : "baz" , } }';
+      var config = hoconParser.parse(hoconString);
+
+      expect(config).to.eql({ foo : { bar : "baz" } });
     });
 
     //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
-    //  var jsonSubset = '{ "foo" : { "bar" : "baz" , , } }';
-    //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    //  var hoconString = '{ "foo" : { "bar" : "baz" , , } }';
+    //  expect(hoconParser.parse(conf)).to.be.ok();
     //});
 
     //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
-    //  var jsonSubset = '{ "foo" : { "bar" : "baz" , , "qux" : "quuz" } }';
-    //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    //  var hoconString = '{ "foo" : { "bar" : "baz" , , "qux" : "quuz" } }';
+    //  expect(hoconParser.parse(conf)).to.be.ok();
     //});
 
     //it('shouldn\'t be parsed when exists initial comma in objects', function() {
-    //  var jsonSubset = '{ "foo" : { , "bar" : "baz" } }';
-    //  expect(hoconParser().parse(jsonSubset)).to.be.ok();
+    //  var hoconString = '{ "foo" : { , "bar" : "baz" } }';
+    //  expect(hoconParser.parse(conf)).to.be.ok();
     //});
 
     describe('duplicate keys and object merging', function(){
       it('should be parsed when exists duplicate keys', function() {
-        var jsonSubset = '{ "foo" : { "a" : "42" }, "foo" : { "b" : "43" } }';
-        expect(hoconParser().parse(jsonSubset)).to.be.ok();
+        var hoconString = '{ "foo" : { "a" : "42" }, "foo" : { "b" : "43" } }';
+        var config = hoconParser.parse(hoconString);
+
+        expect(config).to.eql({ foo : { a : "42" }, foo : { b : "43" } });
       });
     });
 
