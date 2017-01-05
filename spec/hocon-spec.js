@@ -210,5 +210,28 @@ describe('HOCON test suite', function() {
       });
     });
 
+    describe('multiline strings', function(){
+      it('should be parsed when exists multiline string with single line', function() {
+        var hoconString = '{ "foo" : \'\'\'a\'\'\' }';
+        var config = hoconParser.parse(hoconString);
+
+        expect(config).to.eql({ foo : "a" });
+      });
+
+      it('should be parsed when exists multiline string with multiple lines', function() {
+        var hoconString = '{ "foo" : \'\'\'a \n a\'\'\' }';
+        var config = hoconParser.parse(hoconString);
+
+        expect(config).to.eql({ foo : "a \n a" });
+      });
+
+      it('should be parsed when exists multiline string with single quote ending character', function() {
+        var hoconString = '{ "foo" : \'\'\'a\'\'\'\' }';
+        var config = hoconParser.parse(hoconString);
+
+        expect(config).to.eql({ foo : "a'" });
+      });
+    });
+
   });
 });
