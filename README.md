@@ -12,7 +12,11 @@ JS Port of HOCON (Human-Optimized Config Object Notation)
 * Supports break lines instead commas in arrays
 * Supports trailing commas in objects
 * Comments (using forward slashes and number sign)
+* Need not have a comma between values in arrays or objects
 
 # Unsupported Features (yet! :)!)
 
-* Need not have a comma between values in arrays or objects
+* Object merging
+* Include files
+* Unquoted strings
+* Multiline Strings
