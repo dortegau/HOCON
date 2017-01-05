@@ -138,20 +138,29 @@ describe('HOCON test suite', function() {
       expect(config).to.eql({ foo : [ "bar" , "baz" ] });
     });
 
-    //it('shouldn\'t be parsed when exists two trailing commas in arrays', function() {
-    //  var hoconString = '{ "foo" : [ "bar" , "baz" , , ] }';
-    //  expect(hoconParser.parse(conf)).to.throwException();
-    //});
+    it('shouldn\'t be parsed when exists two trailing commas in arrays', function() {
+      var hoconString = '{ "foo" : [ "bar" , "baz" , , ] }';
 
-    //it('shouldn\'t be parsed when exists two commas in a row', function() {
-    //  var hoconString = '{ "foo" : [ "bar" , , "baz" ] }';
-    //  expect(hoconParser.parse(conf)).to.throwException();
-    //});
+      expect(function() {
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
 
-    //it('shouldn\'t be parsed when exists initial comma in arrays', function() {
-    //  var hoconString = '{ "foo" : [ , "bar" , "baz" ] }';
-    //  expect(hoconParser.parse(conf)).to.throwException();
-    //});
+    it('shouldn\'t be parsed when exists two commas in a row', function() {
+      var hoconString = '{ "foo" : [ "bar" , , "baz" ] }';
+
+      expect(function(){
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
+
+    it('shouldn\'t be parsed when exists initial comma in arrays', function() {
+      var hoconString = '{ "foo" : [ , "bar" , "baz" ] }';
+
+      expect(function(){
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
 
     it('should be parsed when exists trailing comma in objects', function() {
       var hoconString = '{ "foo" : { "bar" : "baz" , } }';
@@ -160,20 +169,29 @@ describe('HOCON test suite', function() {
       expect(config).to.eql({ foo : { bar : "baz" } });
     });
 
-    //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
-    //  var hoconString = '{ "foo" : { "bar" : "baz" , , } }';
-    //  expect(hoconParser.parse(conf)).to.be.ok();
-    //});
+    it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
+      var hoconString = '{ "foo" : { "bar" : "baz" , , } }';
 
-    //it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
-    //  var hoconString = '{ "foo" : { "bar" : "baz" , , "qux" : "quuz" } }';
-    //  expect(hoconParser.parse(conf)).to.be.ok();
-    //});
+      expect(function(){
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
 
-    //it('shouldn\'t be parsed when exists initial comma in objects', function() {
-    //  var hoconString = '{ "foo" : { , "bar" : "baz" } }';
-    //  expect(hoconParser.parse(conf)).to.be.ok();
-    //});
+    it('shouldn\'t be parsed when exists two trailing commas in objects', function() {
+      var hoconString = '{ "foo" : { "bar" : "baz" , , "qux" : "quuz" } }';
+
+      expect(function(){
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
+
+    it('shouldn\'t be parsed when exists initial comma in objects', function() {
+      var hoconString = '{ "foo" : { , "bar" : "baz" } }';
+
+      expect(function(){
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
 
     describe('duplicate keys and object merging', function(){
       it('should be parsed when exists duplicate keys', function() {
