@@ -124,6 +124,14 @@ describe('HOCON test suite', function() {
       expect(config).to.eql({ a : { } });
     });
 
+    it('shouldn\'t be parsed when unbalanced braces are present', function() {
+      var hoconString = '"a" }';
+
+      expect(function(){
+        hoconParser.parse(hoconString);
+      }).to.throwException(/Parse error/);
+    });
+
     it('should be parsed when exists trailing comma in arrays', function() {
       var hoconString = '{ "foo" : [ "bar" , "baz" , ] }';
       var config = hoconParser.parse(hoconString);
