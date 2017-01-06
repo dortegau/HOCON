@@ -13,7 +13,6 @@ JS Port of HOCON (Human-Optimized Config Object Notation)
 * Supports trailing commas in objects
 * Comments (using forward slashes and number sign)
 * Need not have a comma between values in arrays or objects
-* Multiline Strings
 
 # Unsupported Features (yet! :)!)
 
