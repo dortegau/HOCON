@@ -18,6 +18,8 @@
     "JSON",
     "YAML",
     "properties",
+    "Typesafe",
+    "Lightbend",
     "configuration"
   ],
   "dependencies": {
